@@ -28,7 +28,7 @@ def load_documents():
 
     return documents
 
-def chunk_documents(documents, chunk_size=500, overlap=100):
+def chunk_documents(documents, chunk_size=1200, overlap=200):
     chunks = []
 
     for doc in documents:

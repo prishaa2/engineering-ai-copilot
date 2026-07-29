@@ -1,14 +1,34 @@
 from src.ingest import load_documents, chunk_documents
+from src.embeddings import create_embedding
+from src.retriever import store_chunks
 
-print("=" * 50)
-print("Engineering AI Copilot")
-print("Document Ingestion")
-print("=" * 50)
 
-documents = load_documents()
+def main():
+    print("=" * 50)
+    print("Engineering AI Copilot")
+    print("Building Vector Database")
+    print("=" * 50)
 
-print(f"\nLoaded {len(documents)} PDF(s).")
+    documents = load_documents()
 
-chunks = chunk_documents(documents)
+    print(f"Loaded {len(documents)} document(s).")
 
-print(f"Created {len(chunks)} chunks.")
+    chunks = chunk_documents(documents)
+
+    print(f"Created {len(chunks)} chunks.")
+
+    for i, chunk in enumerate(chunks):
+        if i % 100 == 0:
+            print(f"Embedding chunk {i}/{len(chunks)}")
+
+        chunk["embedding"] = create_embedding(chunk["text"])
+
+    print("Saving to ChromaDB...")
+
+    store_chunks(chunks)
+
+    print("\nVector database successfully built!")
+
+
+if __name__ == "__main__":
+    main()
