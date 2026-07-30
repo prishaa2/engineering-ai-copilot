@@ -16,6 +16,8 @@ def store_chunks(chunks):
         name="engineering_documents"
     )
 
+    print("Collection count:", collection.count())
+
     for i, chunk in enumerate(chunks):
         collection.add(
             ids=[str(i)],
