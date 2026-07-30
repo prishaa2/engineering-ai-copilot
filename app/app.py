@@ -9,7 +9,6 @@ import streamlit as st
 from src.rag_pipeline import answer_question
 from src.upload import save_uploaded_files
 from src.add_document import add_document
-from src.initialize_db import initialize_database
 from pathlib import Path
 
 # --------------------------------------------------
@@ -21,12 +20,6 @@ st.set_page_config(
     page_icon="⚙️",
     layout="wide"
 )
-
-st.write("APP STARTED")
-
-initialize_database()
-
-st.write("DATABASE INITIALIZED")
 
 st.sidebar.title("⚙️ Engineering AI Copilot")
 
@@ -53,6 +46,44 @@ st.markdown("""
 
     Upload engineering PDFs, then ask technical questions and receive answers with source citations.
 """)
+
+from src.retriever import collection
+from src.ingest import load_documents, chunk_documents
+from src.embeddings import create_embedding
+from src.retriever import store_chunks
+
+# --------------------------------------------------
+# Knowledge Base Initialization
+# --------------------------------------------------
+
+if collection.count() == 0:
+
+    st.warning(
+        "The knowledge base has not been indexed yet."
+    )
+
+    if st.button("🔨 Build Knowledge Base"):
+
+        with st.spinner(
+            "Building vector database... This may take a few minutes the first time."
+        ):
+
+            documents = load_documents()
+
+            chunks = chunk_documents(documents)
+
+            for chunk in chunks:
+                chunk["embedding"] = create_embedding(
+                    chunk["text"]
+                )
+
+            store_chunks(chunks)
+
+        st.success(
+            "Knowledge base built successfully!"
+        )
+
+        st.rerun()
 
 # --------------------------------------------------
 # Upload PDFs
