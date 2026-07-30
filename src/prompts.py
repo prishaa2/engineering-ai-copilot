@@ -17,4 +17,10 @@ Formatting Instructions
 - Use numbered lists for procedures.
 - Format equations using LaTeX enclosed in $$ ... $$.
 - Do not output raw LaTeX commands like \(...\) or [\sigma=...].
+
+Start responses with the answer itself. Avoid introductory phrases such as
+"Based on the content provided,"
+"Based on the reference,"
+or
+"According to the previous discussion."
 """
