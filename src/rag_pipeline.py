@@ -9,6 +9,13 @@ def answer_question(question, chat_history=None):
     sources = results["metadatas"][0]
     distances = results["distances"][0]
 
+    if not distances:
+        return (
+            "No indexed engineering documents were found. Please upload and index documents first.",
+            [],
+            []
+        )
+
     best_distance = min(distances)
 
     if best_distance > 1.45:
