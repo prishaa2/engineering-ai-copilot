@@ -49,7 +49,7 @@ st.markdown("""
 
 from src.retriever import collection
 from src.ingest import load_documents, chunk_documents
-from src.embeddings import create_embedding
+from src.embeddings import create_embeddings
 from src.retriever import store_chunks
 
 # --------------------------------------------------
@@ -65,25 +65,42 @@ if collection.count() == 0:
     if st.button("🔨 Build Knowledge Base"):
 
         with st.spinner(
-            "Building vector database... This may take a few minutes the first time."
+            "Building vector database... This may take a few minutes."
         ):
 
             documents = load_documents()
 
             chunks = chunk_documents(documents)
 
-            for chunk in chunks:
-                chunk["embedding"] = create_embedding(
+            progress = st.progress(0)
+
+            batch_size = 100
+
+            for i in range(0, len(chunks), batch_size):
+
+                batch = chunks[i:i + batch_size]
+
+                texts = [
                     chunk["text"]
+                    for chunk in batch
+                ]
+
+                embeddings = create_embeddings(texts)
+
+                for chunk, embedding in zip(batch, embeddings):
+                    chunk["embedding"] = embedding
+
+                progress.progress(
+                    min((i + batch_size) / len(chunks), 1.0)
                 )
+
+            progress.empty()
 
             store_chunks(chunks)
 
         st.success(
             "Knowledge base built successfully!"
         )
-
-        st.rerun()
 
 # --------------------------------------------------
 # Upload PDFs

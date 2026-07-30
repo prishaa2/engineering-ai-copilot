@@ -15,3 +15,14 @@ def create_embedding(text):
     )
 
     return response.data[0].embedding
+
+def create_embeddings(texts):
+    response = client.embeddings.create(
+        model="text-embedding-3-small",
+        input=texts,
+    )
+
+    return [
+        item.embedding
+        for item in response.data
+    ]
