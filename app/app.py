@@ -64,9 +64,7 @@ if collection.count() == 0:
 
     if st.button("🔨 Build Knowledge Base"):
 
-        with st.spinner(
-            "Building vector database... This may take a few minutes."
-        ):
+        with st.spinner("Building vector database... This may take a few minutes."):
 
             documents = load_documents()
 
@@ -97,10 +95,7 @@ if collection.count() == 0:
             progress.empty()
 
             store_chunks(chunks)
-
-        st.success(
-            "Knowledge base built successfully!"
-        )
+        st.success("Knowledge base built successfully!")
 
 # --------------------------------------------------
 # Upload PDFs
