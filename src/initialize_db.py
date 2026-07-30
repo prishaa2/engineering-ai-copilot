@@ -4,9 +4,6 @@ from src.retriever import collection, store_chunks
 
 
 def initialize_database():
-    """
-    Build the vector database automatically if it is empty.
-    """
 
     if collection.count() > 0:
         print("Vector database already initialized.")
@@ -15,12 +12,18 @@ def initialize_database():
     print("Initializing vector database...")
 
     documents = load_documents()
+    print(f"Loaded {len(documents)} documents.")
 
     chunks = chunk_documents(documents)
+    print(f"Created {len(chunks)} chunks.")
 
-    for chunk in chunks:
+    for i, chunk in enumerate(chunks):
+        if i % 100 == 0:
+            print(f"Embedding {i}/{len(chunks)}")
         chunk["embedding"] = create_embedding(chunk["text"])
+
+    print("Finished embeddings.")
 
     store_chunks(chunks)
 
-    print(f"Indexed {len(chunks)} chunks.")
+    print("Initialization complete.")
