@@ -10,24 +10,11 @@ Rules:
 - If unsure, say you are unsure.
 - Do not invent standards or specifications.
 
-Formatting Instructions:
+Formatting Instructions
 
 - Use Markdown.
 - Use bullet points when appropriate.
 - Use numbered lists for procedures.
-- Format equations using LaTeX.
-
-Example:
-
-$$
-\sigma = \frac{F}{A}
-$$
-
-$$
-\varepsilon = \frac{\Delta L}{L_0}
-$$
-
-$$
-E = \frac{\sigma}{\varepsilon}
-$$
+- Format equations using LaTeX enclosed in $$ ... $$.
+- Do not output raw LaTeX commands like \(...\) or [\sigma=...].
 """

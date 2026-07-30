@@ -172,8 +172,12 @@ if question and question.strip():
 
             answer, sources, distances = answer_question(question, st.session_state.messages)
         
-        answer = answer.replace("[\\", "$$\n\\")
-        answer = answer.replace("\\]", "\n$$")
+        answer = answer.replace(r"\(", "$")
+        answer = answer.replace(r"\)", "$")
+
+        answer = answer.replace(r"\[", "$$")
+        answer = answer.replace(r"\]", "$$")
+        
         st.markdown(answer)
 
         # Show retrieved sources
