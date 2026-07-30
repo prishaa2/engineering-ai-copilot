@@ -96,6 +96,7 @@ if collection.count() == 0:
 
             store_chunks(chunks)
         st.success("Knowledge base built successfully!")
+        st.rerun()
 
 # --------------------------------------------------
 # Upload PDFs
