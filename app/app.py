@@ -9,6 +9,7 @@ import streamlit as st
 from src.rag_pipeline import answer_question
 from src.upload import save_uploaded_files
 from src.add_document import add_document
+from src.initialize_db import initialize_database
 from pathlib import Path
 
 # --------------------------------------------------
@@ -20,6 +21,8 @@ st.set_page_config(
     page_icon="⚙️",
     layout="wide"
 )
+
+initialize_database()
 
 st.sidebar.title("⚙️ Engineering AI Copilot")
 
