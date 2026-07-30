@@ -22,7 +22,11 @@ st.set_page_config(
     layout="wide"
 )
 
+st.write("APP STARTED")
+
 initialize_database()
+
+st.write("DATABASE INITIALIZED")
 
 st.sidebar.title("⚙️ Engineering AI Copilot")
 
